@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode'; // Note the import style
+import toast from 'react-hot-toast';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -18,9 +19,9 @@ const Navbar = () => {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem('token'); // Clear the token from storage
-    alert('You have been logged out.');
-    navigate('/login'); // Redirect to login page
+    localStorage.removeItem('token');
+    toast.success('You have been logged out.'); // <-- Replace alert
+    navigate('/login');
   };
 
   return (

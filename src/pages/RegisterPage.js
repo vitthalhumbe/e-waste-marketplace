@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../services/api';
+import toast from 'react-hot-toast';
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -19,11 +20,11 @@ const RegisterPage = () => {
     e.preventDefault();
     try {
       await registerUser(formData);
-      alert('Registration successful! Please log in.');
-      navigate('/login'); // Redirect to a login page (which you'll create next)
+      toast.success('Registration successful! Please log in.'); // <-- Replace alert
+      navigate('/login');
     } catch (error) {
       console.error('Registration failed:', error);
-      alert('Registration failed. The user may already exist.');
+      toast.error('Registration failed. The user may already exist.'); // <-- Replace alert
     }
   };
 

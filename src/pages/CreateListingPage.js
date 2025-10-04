@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createListing } from '../services/api';
+import toast from 'react-hot-toast';
 
 const CreateListingPage = () => {
   const [formData, setFormData] = useState({
@@ -16,14 +17,14 @@ const CreateListingPage = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent page reload
+    e.preventDefault();
     try {
       await createListing(formData);
-      alert('Listing created successfully!');
-      navigate('/'); // Redirect to homepage after successful creation
+      toast.success('Listing created successfully!'); // <-- Replace alert
+      navigate('/');
     } catch (error) {
       console.error('Failed to create listing:', error);
-      alert('Failed to create listing.');
+      toast.error('Failed to create listing.'); // <-- Replace alert
     }
   };
 

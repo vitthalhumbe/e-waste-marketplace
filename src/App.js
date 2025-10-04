@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
 import CreateListingPage from './pages/CreateListingPage';
 import Navbar from './components/Navbar';
+import { Toaster } from 'react-hot-toast';
 import LoginPage from './pages/LoginPage';
 import './App.css';
 
@@ -11,6 +12,7 @@ function App() {
   return (
     <Router>
       <div className="App">
+        <Toaster />
         <Navbar />
         <main>
           <Routes>
