@@ -34,6 +34,7 @@ const Navbar = () => {
             {/* This answers your question about roles! */}
             {user.user_type === 'Disposer' && <Link to="/create">Create Listing</Link>}
             {user.user_type === 'Collector' && <Link to="/">Browse Listings</Link>}
+            {user.user_type === 'Collector' && <Link to="/map">View Map</Link>}
             
             <button onClick={handleLogout} className="logout-button">Logout</button>
           </>

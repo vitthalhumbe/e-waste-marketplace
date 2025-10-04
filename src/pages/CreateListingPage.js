@@ -9,6 +9,8 @@ const CreateListingPage = () => {
     description: '',
     device_type: 'Phone',
     condition: '',
+    latitude: '',  
+    longitude: '', 
   });
   const navigate = useNavigate();
 
@@ -52,6 +54,14 @@ const CreateListingPage = () => {
         <div>
           <label>Condition:</label>
           <input type="text" name="condition" value={formData.condition} onChange={handleChange} placeholder="e.g., Screen cracked" required/>
+        </div>
+        <div>
+          <label>Latitude:</label>
+          <input type="number" name="latitude" value={formData.latitude} onChange={handleChange} placeholder="e.g., 19.0760" />
+        </div>
+        <div>
+          <label>Longitude:</label>
+          <input type="number" name="longitude" value={formData.longitude} onChange={handleChange} placeholder="e.g., 72.8777" />
         </div>
         <button type="submit">Create Listing</button>
       </form>
