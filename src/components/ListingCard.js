@@ -1,15 +1,22 @@
 import React from 'react';
-import './ListingCard.css'; // We'll create this file for styling
+import { Link } from 'react-router-dom'; // Import Link
+import './ListingCard.css';
 
 const ListingCard = ({ listing }) => {
   return (
-    <div className="card">
-      {listing.imageUrl && <img src={listing.imageUrl} alt={listing.title} className="card-image" />}
-      <h3>{listing.title}</h3>
-      <p><strong>Device:</strong> {listing.device_type}</p>
-      <p><strong>Condition:</strong> {listing.condition}</p>
-      <p><strong>Posted by:</strong> {listing.disposer_id ? listing.disposer_id.username : 'Unknown'}</p>
-    </div>
+    // Wrap the card in a Link to the detail page
+    <Link to={`/listing/${listing._id}`} className="listing-card-link">
+      <div className="listing-card">
+        <img src={listing.imageUrl || 'https://via.placeholder.com/300'} alt={listing.title} className="card-image" />
+        <div className="card-content">
+          <h3 className="card-title">{listing.title}</h3>
+          <p className="card-condition">Condition: {listing.condition}</p>
+          <p className="card-posted-by">
+            Posted by: {listing.disposer_id ? listing.disposer_id.username : 'Unknown'}
+          </p>
+        </div>
+      </div>
+    </Link>
   );
 };
 

@@ -1,66 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import { getAllListings } from '../services/api';
 import ListingCard from '../components/ListingCard';
-import { deleteListing } from '../services/api';
-import { jwtDecode } from 'jwt-decode';
-import toast from 'react-hot-toast';
-import '../App.css'; // You can keep this for styling
+import './HomePage.css'; // New CSS file for the homepage
+
 const HomePage = () => {
   const [listings, setListings] = useState([]);
-  const [user, setUser] = useState(null);
-
+  
   useEffect(() => {
-    // Get user from token
-    const token = localStorage.getItem('token');
-    if (token) {
-      setUser(jwtDecode(token));
-    }
+    const fetchListings = async () => {
+      const response = await getAllListings();
+      setListings(response.data);
+    };
     fetchListings();
   }, []);
 
-  const fetchListings = async () => {
-    try {
-      const response = await getAllListings();
-      setListings(response.data);
-    } catch (error) {
-      console.error("Failed to fetch listings:", error);
-    }
-  };
-
-  const handleDelete = async (listingId) => {
-    if (window.confirm('Are you sure you want to delete this listing?')) {
-      try {
-        await deleteListing(listingId);
-        toast.success('Listing deleted!');
-        fetchListings(); // Refresh the list
-      } catch (error) {
-        toast.error('Could not delete listing.');
-      }
-    }
-  };
-
   return (
-    // The JSX is the same, but you can remove the outer header if you want
-    <div>
-      <header className="App-header">
-        <h1>E-Waste Marketplace</h1>
-      </header>
-      <div className="listings-container">
-        {listings.map(listing => (
-          <div key={listing._id}>
-            <ListingCard listing={listing} />
-            {/* Show buttons only if the user is logged in and owns the listing */}
-            {user && user.id === listing.disposer_id && (
-              <div>
-                <button>Update</button> {/* We'll add update logic later */}
-                <button onClick={() => handleDelete(listing._id)}>Delete</button>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
+    <div className="homepage">
+      {/* Hero Section */}
+      <section className="hero-section">
+        <h1>Give Your Tech a Second Life</h1>
+        <p>Find parts, fuel creativity, or recycle responsibly.</p>
+        <div className="search-bar">
+          <input type="text" placeholder="Search for 'iPhone screen', 'laptop parts'..." />
+          <button>Search</button>
+        </div>
+      </section>
+
+      {/* Listings Section */}
+      <section className="listings-section">
+        <h2>Recent Listings</h2>
+        <div className="listings-grid">
+          {listings.map(listing => (
+            <ListingCard key={listing._id} listing={listing} />
+          ))}
+        </div>
+      </section>
     </div>
   );
-}
+};
 
 export default HomePage;
