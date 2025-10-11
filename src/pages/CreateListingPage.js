@@ -1,9 +1,10 @@
 // src/pages/CreateListingPage.js
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createListing } from '../services/api';
 import toast from 'react-hot-toast';
-import './CreateListingPage.css'; // We'll create a new CSS file
+import LocationPicker from '../components/LocationPicker';
+import './CreateListingPage.css';
 
 const CreateListingPage = () => {
   const [formData, setFormData] = useState({
@@ -11,39 +12,32 @@ const CreateListingPage = () => {
     description: '',
     device_type: 'Phone',
     condition: '',
-    latitude: '',
-    longitude: '',
   });
-  const [imageFile, setImageFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState('');
+  const [location, setLocation] = useState(null);
+  const [imageFile, setImageFile] = useState(null); // We only need to store the file itself
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Simplified file handler
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImageFile(file);
-      setImagePreview(URL.createObjectURL(file));
-    }
+    setImageFile(e.target.files[0]);
   };
-  
-  // Clean up the object URL to prevent memory leaks
-  useEffect(() => {
-    return () => {
-      if (imagePreview) {
-        URL.revokeObjectURL(imagePreview);
-      }
-    };
-  }, [imagePreview]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!location) {
+      toast.error('Please search for and select a location.');
+      return;
+    }
+
     const submissionData = new FormData();
-    // Append all form data
     Object.keys(formData).forEach(key => submissionData.append(key, formData[key]));
+    submissionData.append('latitude', location.lat);
+    submissionData.append('longitude', location.lng);
+
     if (imageFile) {
       submissionData.append('image', imageFile);
     }
@@ -57,17 +51,15 @@ const CreateListingPage = () => {
     }
   };
 
-   return (
+  return (
     <div className="create-listing-page">
       <h1>List Your E-Waste Item</h1>
-
-      {/* The <form> tag is the flex container */}
       <form onSubmit={handleSubmit} className="create-listing-container">
-
-        {/* This is the FIRST direct child */}
+        {/* Left Column: Core Details */}
         <div className="form-column">
           <div className="form-section">
             <h3>Item Details</h3>
+            {/* ... title, description, device_type, condition fields ... */}
             <div className="form-group">
               <label>Title</label>
               <input type="text" name="title" onChange={handleChange} placeholder="e.g., iPhone X - For Parts" required />
@@ -92,33 +84,22 @@ const CreateListingPage = () => {
           </div>
         </div>
 
-        {/* This is the SECOND direct child */}
+        {/* Right Column: Location & Image */}
         <div className="form-column">
           <div className="form-section">
             <h3>Location</h3>
-            <div className="form-group">
-              <label>Latitude</label>
-              <input type="number" name="latitude" step="any" onChange={handleChange} placeholder="e.g., 19.0760" />
-            </div>
-            <div className="form-group">
-              <label>Longitude</label>
-              <input type="number" name="longitude" step="any" onChange={handleChange} placeholder="e.g., 72.8777" />
-            </div>
+            <LocationPicker onLocationSelect={setLocation} />
           </div>
           <div className="form-section">
             <h3>Upload Image</h3>
-            <div className="image-upload-box">
-              {imagePreview ? (
-                <img src={imagePreview} alt="Preview" className="image-preview" />
-              ) : (
-                <p>Click to select an image</p>
-              )}
+            {/* --- THIS IS THE SIMPLIFIED INPUT --- */}
+            <div className="form-group">
               <input type="file" name="image" onChange={handleFileChange} accept="image/*" />
             </div>
           </div>
         </div>
 
-        {/* This is the THIRD direct child */}
+        {/* Submit Button */}
         <div className="form-submit-area">
           <button type="submit" className="submit-listing-btn">Create Listing</button>
         </div>
