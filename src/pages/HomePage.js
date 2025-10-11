@@ -5,14 +5,16 @@ import './HomePage.css'; // New CSS file for the homepage
 
 const HomePage = () => {
   const [listings, setListings] = useState([]);
-  
+  const [filter, setFilter] = useState(''); // <-- New state for the filter
+
+  // This useEffect will now re-run whenever the 'filter' state changes
   useEffect(() => {
     const fetchListings = async () => {
-      const response = await getAllListings();
+      const response = await getAllListings(filter);
       setListings(response.data);
     };
     fetchListings();
-  }, []);
+  }, [filter]);
 
   return (
     <div className="homepage">
@@ -25,10 +27,17 @@ const HomePage = () => {
           <button>Search</button>
         </div>
       </section>
-
-      {/* Listings Section */}
-      <section className="listings-section">
-        <h2>Recent Listings</h2>
+<section className="listings-section">
+        <div className="filter-container">
+          <h2>Recent Listings</h2>
+          <select onChange={(e) => setFilter(e.target.value)} value={filter}>
+            <option value="">All Types</option>
+            <option value="Phone">Phone</option>
+            <option value="Laptop">Laptop</option>
+            <option value="Component">Component</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
         <div className="listings-grid">
           {listings.map(listing => (
             <ListingCard key={listing._id} listing={listing} />

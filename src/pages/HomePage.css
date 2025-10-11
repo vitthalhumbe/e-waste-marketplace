@@ -45,3 +45,15 @@
   max-width: 1200px;
   margin: 0 auto;
 }
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto 20px auto;
+}
+.filter-container select {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid var(--subtle-grey);
+}

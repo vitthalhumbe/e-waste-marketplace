@@ -1,0 +1,43 @@
+/* src/pages/AdminPage.css */
+/* --- Shell/CMD View --- */
+.admin-shell {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  color: #fff;
+  font-family: 'Consolas', 'Courier New', monospace;
+  padding: 20px;
+  z-index: 2000;
+}
+.prompt-line { display: flex; align-items: center; }
+.prompt-line span { margin-right: 10px; }
+.admin-shell input {
+  background: none;
+  border: none;
+  color: #fff;
+  font-family: inherit;
+  font-size: 1rem;
+  width: 100%;
+}
+.admin-shell input:focus { outline: none; }
+.error-message { color: #e74c3c; margin-top: 10px; }
+
+/* --- Dashboard View --- */
+.admin-dashboard { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+.admin-dashboard h1 { text-align: center; margin-bottom: 40px; }
+.collectors-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.collector-card { background: var(--white); padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+.collector-card h4 { margin-top: 0; font-size: 1.3rem; }
+.collector-card p { margin: 5px 0; }
+.status-controls { margin-top: 15px; display: flex; gap: 10px; }
+.status-controls button { flex: 1; border: none; padding: 8px; border-radius: 5px; color: white; cursor: pointer; }
+.btn-approve { background-color: var(--primary-green); }
+.btn-pending { background-color: #f39c12; } /* Orange */
+.btn-reject { background-color: #e74c3c; } /* Red */
+
+.status-Pending { color: #f39c12; font-weight: bold; }
+.status-Approved { color: var(--primary-green); font-weight: bold; }
+.status-Rejected { color: #e74c3c; font-weight: bold; }

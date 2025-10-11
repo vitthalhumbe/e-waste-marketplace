@@ -17,7 +17,12 @@ api.interceptors.request.use(config => {
 });
 
 // --- Public Routes ---
-export const getAllListings = () => api.get('/listings');
+export const getAllListings = (deviceType) => {
+  if (deviceType) {
+    return api.get(`/listings?device_type=${deviceType}`);
+  }
+  return api.get('/listings');
+};
 export const getListingById = (id) => api.get(`/listings/${id}`);
 export const registerUser = (userData) => api.post('/users/register', userData);
 export const loginUser = (credentials) => api.post('/users/login', credentials);
@@ -28,3 +33,9 @@ export const updateListing = (id, listingData) => api.put(`/listings/${id}`, lis
 export const deleteListing = (id) => api.delete(`/listings/${id}`);
 
 export const getMyListings = () => api.get('/listings/my-listings');
+const createAdminHeaders = (password) => ({
+  headers: { 'x-admin-password': password }
+});
+
+export const getCollectors = (password) => api.get('/admin/collectors', createAdminHeaders(password));
+export const updateCollectorStatus = (id, status, password) => api.put(`/admin/users/${id}/status`, { status }, createAdminHeaders(password));

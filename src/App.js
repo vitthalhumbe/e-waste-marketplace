@@ -8,7 +8,9 @@ import MyListingsPage from './pages/MyListingsPage';
 import MapPage from './pages/MapPage';
 import ListingDetailPage from './pages/ListingDetailPage';
 import { Toaster } from 'react-hot-toast';
+import EditListingPage from './pages/EditListingPage';
 import LoginPage from './pages/LoginPage';
+import AdminPage from './pages/AdminPage';
 import './App.css';
 
 function App() {
@@ -26,6 +28,8 @@ function App() {
             <Route path="/login" element={<LoginPage />}  />
             <Route path="/listing/:id" element={<ListingDetailPage />} />
             <Route path="/my-listings" element={<MyListingsPage />} />
+            <Route path="/edit-listing/:id" element={<EditListingPage />} />
+            <Route path="/admin" element={<AdminPage />} />
           </Routes>
           
         </main>

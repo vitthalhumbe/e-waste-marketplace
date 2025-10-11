@@ -22,7 +22,7 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const submissionData = { ...formData, user_type: registerType };
-    
+
     try {
       await registerUser(submissionData);
       const successMessage = registerType === 'Disposer'
@@ -67,12 +67,16 @@ const RegisterPage = () => {
           </div>
 
           {/* Collector-Only Field */}
-          {registerType === 'Collector' && (
+          <>
             <div className="form-group">
-              <label>SPCB Authorization Number:</label>
-              <input type="text" name="spcb_authorization_number" onChange={handleChange} required />
+              <label>Mobile Number:</label>
+              <input type="tel" name="mobile_number" onChange={handleChange} />
             </div>
-          )}
+            <div className="form-group">
+              <label>Address:</label>
+              <input type="text" name="address" onChange={handleChange} />
+            </div>
+          </>
 
           <button type="submit" className="register-button">Register</button>
         </form>

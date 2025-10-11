@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { getMyListings, deleteListing } from '../services/api';
 import ListingCard from '../components/ListingCard';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 import './MyListingPage.css'; // New CSS file
 
 const MyListingsPage = () => {
@@ -42,7 +43,8 @@ const MyListingsPage = () => {
             <div key={listing._id} className="listing-with-controls">
               <ListingCard listing={listing} />
               <div className="controls">
-                <button className="update-btn">Update</button>
+                {/* Change this button to a Link */}
+                <Link to={`/edit-listing/${listing._id}`} className="update-btn">Update</Link>
                 <button className="delete-btn" onClick={() => handleDelete(listing._id)}>Delete</button>
               </div>
             </div>
@@ -55,4 +57,4 @@ const MyListingsPage = () => {
   );
 };
 
-export default  MyListingsPage;
+export default MyListingsPage;
