@@ -26,3 +26,5 @@ export const loginUser = (credentials) => api.post('/users/login', credentials);
 export const createListing = (listingData) => api.post('/listings', listingData);
 export const updateListing = (id, listingData) => api.put(`/listings/${id}`, listingData);
 export const deleteListing = (id) => api.delete(`/listings/${id}`);
+
+export const getMyListings = () => api.get('/listings/my-listings');

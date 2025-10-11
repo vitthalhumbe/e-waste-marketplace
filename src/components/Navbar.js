@@ -36,7 +36,12 @@ const Navbar = () => {
         {user ? (
           // --- Logged-in User View ---
           <>
-            {user.user_type === 'Disposer' && <Link to="/create">Create Listing</Link>}
+            {user.user_type === 'Disposer' && (
+  <>
+    <Link to="/my-listings">My Listings</Link>
+    <Link to="/create">Create Listing</Link>
+  </>
+)}
             {user.user_type === 'Collector' && <Link to="/map">View Map</Link>}
 
             <div className="nav-user-info">

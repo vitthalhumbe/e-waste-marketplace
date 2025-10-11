@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
 import CreateListingPage from './pages/CreateListingPage';
 import Navbar from './components/Navbar';
+import MyListingsPage from './pages/MyListingsPage';
 import MapPage from './pages/MapPage';
 import ListingDetailPage from './pages/ListingDetailPage';
 import { Toaster } from 'react-hot-toast';
@@ -24,6 +25,7 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />}  />
             <Route path="/listing/:id" element={<ListingDetailPage />} />
+            <Route path="/my-listings" element={<MyListingsPage />} />
           </Routes>
           
         </main>

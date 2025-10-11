@@ -1,0 +1,39 @@
+/* src/pages/MyListingsPage.css */
+.my-listings-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.my-listings-page h1 {
+  margin-bottom: 30px;
+}
+
+.listing-with-controls {
+  position: relative;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+  padding: 10px 15px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-top: 1px solid #eee;
+}
+
+.controls button {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: 500;
+}
+
+.update-btn {
+  background-color: #3498db; /* Blue */
+}
+
+.delete-btn {
+  background-color: #e74c3c; /* Red */
+}

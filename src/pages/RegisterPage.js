@@ -1,14 +1,17 @@
+// src/pages/RegisterPage.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../services/api';
 import toast from 'react-hot-toast';
+import './RegisterPage.css';
 
 const RegisterPage = () => {
+  const [registerType, setRegisterType] = useState('Disposer');
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: '',
-    user_type: 'Disposer', // Default value
+    spcb_authorization_number: '',
   });
   const navigate = useNavigate();
 
@@ -18,45 +21,62 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const submissionData = { ...formData, user_type: registerType };
+    
     try {
-      await registerUser(formData);
-      toast.success('Registration successful! Please log in.'); // <-- Replace alert
+      await registerUser(submissionData);
+      const successMessage = registerType === 'Disposer'
+        ? 'Registration successful! Please login.'
+        : 'Registration submitted! Your account is now pending approval.';
+      toast.success(successMessage, { duration: 5000 });
       navigate('/login');
     } catch (error) {
-      console.error('Registration failed:', error);
-      toast.error('Registration failed. The user may already exist.'); // <-- Replace alert
+      const errorMessage = error.response?.data?.message || 'Registration failed. Please try again.';
+      toast.error(errorMessage);
     }
   };
 
   return (
-    <div>
-      <h2>Register a New Account</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Username:</label>
-          <input type="text" name="username" onChange={handleChange} required />
+    <div className="register-container">
+      <div className="register-box">
+        {/* --- Toggle Buttons --- */}
+        <div className="toggle-buttons">
+          <button className={registerType === 'Disposer' ? 'active' : ''} onClick={() => setRegisterType('Disposer')}>
+            Register as Disposer
+          </button>
+          <button className={registerType === 'Collector' ? 'active' : ''} onClick={() => setRegisterType('Collector')}>
+            Register as Collector
+          </button>
         </div>
-        <div>
-          <label>Email:</label>
-          <input type="email" name="email" onChange={handleChange} required />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input type="password" name="password" onChange={handleChange} required />
-        </div>
-        <div>
-          <label>I am a:</label>
-          <div>
-            <input type="radio" id="disposer" name="user_type" value="Disposer" checked={formData.user_type === 'Disposer'} onChange={handleChange} />
-            <label htmlFor="disposer">Disposer (I have e-waste)</label>
+
+        <h2>Create Your Account</h2>
+
+        <form onSubmit={handleSubmit}>
+          {/* Common Fields */}
+          <div className="form-group">
+            <label>{registerType === 'Disposer' ? 'Username' : 'Company/Organization Name'}:</label>
+            <input type="text" name="username" onChange={handleChange} required />
           </div>
-          <div>
-            <input type="radio" id="collector" name="user_type" value="Collector" checked={formData.user_type === 'Collector'} onChange={handleChange} />
-            <label htmlFor="collector">Collector (I want e-waste)</label>
+          <div className="form-group">
+            <label>Email:</label>
+            <input type="email" name="email" onChange={handleChange} required />
           </div>
-        </div>
-        <button type="submit">Register</button>
-      </form>
+          <div className="form-group">
+            <label>Password:</label>
+            <input type="password" name="password" onChange={handleChange} required />
+          </div>
+
+          {/* Collector-Only Field */}
+          {registerType === 'Collector' && (
+            <div className="form-group">
+              <label>SPCB Authorization Number:</label>
+              <input type="text" name="spcb_authorization_number" onChange={handleChange} required />
+            </div>
+          )}
+
+          <button type="submit" className="register-button">Register</button>
+        </form>
+      </div>
     </div>
   );
 };
