@@ -6,6 +6,9 @@ import CreateListingPage from './pages/CreateListingPage';
 import Navbar from './components/Navbar';
 import MyListingsPage from './pages/MyListingsPage';
 import MapPage from './pages/MapPage';
+import AboutUsPage from './pages/AboutUsPage';
+import OurTeamPage from './pages/OurTeamPage';
+import SDGsPage from './pages/SDGsPage';
 import ListingDetailPage from './pages/ListingDetailPage';
 import { Toaster } from 'react-hot-toast';
 import EditListingPage from './pages/EditListingPage';
@@ -30,6 +33,9 @@ function App() {
             <Route path="/my-listings" element={<MyListingsPage />} />
             <Route path="/edit-listing/:id" element={<EditListingPage />} />
             <Route path="/admin" element={<AdminPage />} />
+            <Route path="/about" element={<AboutUsPage />} />
+<Route path="/team" element={<OurTeamPage />} />
+<Route path="/sdgs" element={<SDGsPage />} />
           </Routes>
           
         </main>

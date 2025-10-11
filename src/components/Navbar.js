@@ -31,6 +31,12 @@ const Navbar = () => {
       
       <div className="nav-links">
         <Link to="/">Home</Link>
+        
+        {/* --- ADDED STATIC PAGE LINKS --- */}
+        <Link to="/about">About Us</Link>
+        <Link to="/team">Our Team</Link>
+        <Link to="/sdgs">SDGs</Link>
+        {/* ------------------------------- */}
 
         {user ? (
           // --- Logged-in User View ---
@@ -41,8 +47,6 @@ const Navbar = () => {
                 <Link to="/create">Create Listing</Link>
               </>
             )}
-            
-            {/* The "View Map" link has been removed from the Collector's view */}
             
             <div className="nav-user-info">
               <span>Welcome, {user.username}</span>
