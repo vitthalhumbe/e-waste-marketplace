@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api';
+// src/services/api.js
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
 // Create a new Axios instance
 const api = axios.create({
