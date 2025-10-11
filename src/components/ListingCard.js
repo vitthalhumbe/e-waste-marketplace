@@ -4,6 +4,7 @@ import './ListingCard.css'; // We'll create this file for styling
 const ListingCard = ({ listing }) => {
   return (
     <div className="card">
+      {listing.imageUrl && <img src={listing.imageUrl} alt={listing.title} className="card-image" />}
       <h3>{listing.title}</h3>
       <p><strong>Device:</strong> {listing.device_type}</p>
       <p><strong>Condition:</strong> {listing.condition}</p>

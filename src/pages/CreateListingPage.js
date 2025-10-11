@@ -9,26 +9,39 @@ const CreateListingPage = () => {
     description: '',
     device_type: 'Phone',
     condition: '',
-    latitude: '',  
-    longitude: '', 
+    latitude: '',
+    longitude: '',
   });
   const navigate = useNavigate();
-
+  const [imageFile, setImageFile] = useState(null);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
+  const handleFileChange = (e) => {
+    setImageFile(e.target.files[0]);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Use FormData to send both text and file data
+    const submissionData = new FormData();
+    submissionData.append('title', formData.title);
+    submissionData.append('description', formData.description);
+    submissionData.append('device_type', formData.device_type);
+    submissionData.append('condition', formData.condition);
+    submissionData.append('latitude', formData.latitude);
+    submissionData.append('longitude', formData.longitude);
+    if (imageFile) {
+      submissionData.append('image', imageFile); // 'image' must match the backend
+    }
     try {
-      await createListing(formData);
-      toast.success('Listing created successfully!'); // <-- Replace alert
+      await createListing(submissionData);
+      toast.success('Listing created successfully!');
       navigate('/');
     } catch (error) {
-      console.error('Failed to create listing:', error);
-      toast.error('Failed to create listing.'); // <-- Replace alert
+      toast.error('Failed to create listing.');
     }
   };
+
 
   return (
     <div>
@@ -53,7 +66,7 @@ const CreateListingPage = () => {
         </div>
         <div>
           <label>Condition:</label>
-          <input type="text" name="condition" value={formData.condition} onChange={handleChange} placeholder="e.g., Screen cracked" required/>
+          <input type="text" name="condition" value={formData.condition} onChange={handleChange} placeholder="e.g., Screen cracked" required />
         </div>
         <div>
           <label>Latitude:</label>
@@ -62,6 +75,10 @@ const CreateListingPage = () => {
         <div>
           <label>Longitude:</label>
           <input type="number" name="longitude" value={formData.longitude} onChange={handleChange} placeholder="e.g., 72.8777" />
+        </div>
+        <div>
+          <label>Image:</label>
+          <input type="file" name="image" onChange={handleFileChange} />
         </div>
         <button type="submit">Create Listing</button>
       </form>
