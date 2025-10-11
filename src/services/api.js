@@ -1,35 +1,28 @@
 import axios from 'axios';
 
-// The base URL of your backend server
 const API_URL = 'http://localhost:5000/api';
 
-// --- Listing Functions ---
+// Create a new Axios instance
+const api = axios.create({
+  baseURL: API_URL,
+});
 
-// Function to get all listings
-export const getAllListings = () => {
-  return axios.get(`${API_URL}/listings`);
-};
+// Use an interceptor to add the token to every request
+api.interceptors.request.use(config => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
-// Function to get a single listing by ID
-export const getListingById = (id) => {
-  return axios.get(`${API_URL}/listings/${id}`);
-};
+// --- Public Routes ---
+export const getAllListings = () => api.get('/listings');
+export const getListingById = (id) => api.get(`/listings/${id}`);
+export const registerUser = (userData) => api.post('/users/register', userData);
+export const loginUser = (credentials) => api.post('/users/login', credentials);
 
-// Function to create a new listing
-export const createListing = (listingData) => {
-  // In the future, you'll also send the user's token here
-  return axios.post(`${API_URL}/listings`, listingData);
-};
-
-
-// --- User Authentication Functions (Newly Added) ---
-
-// Function to register a new user
-export const registerUser = (userData) => {
-  return axios.post(`${API_URL}/users/register`, userData);
-};
-
-// Function to log in a user
-export const loginUser = (credentials) => {
-  return axios.post(`${API_URL}/users/login`, credentials);
-};
+// --- Protected Routes ---
+export const createListing = (listingData) => api.post('/listings', listingData);
+export const updateListing = (id, listingData) => api.put(`/listings/${id}`, listingData);
+export const deleteListing = (id) => api.delete(`/listings/${id}`);

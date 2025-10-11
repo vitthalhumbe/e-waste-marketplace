@@ -1,26 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import { getAllListings } from '../services/api';
 import ListingCard from '../components/ListingCard';
+import { deleteListing } from '../services/api';
+import { jwtDecode } from 'jwt-decode';
+import toast from 'react-hot-toast';
 import '../App.css'; // You can keep this for styling
-
-// The function name is changed from App to HomePage
-function HomePage() { 
+const HomePage = () => {
   const [listings, setListings] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const fetchListings = async () => {
-      try {
-        const response = await getAllListings();
-        setListings(response.data);
-      } catch (error) {
-        console.error("Failed to fetch listings:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    // Get user from token
+    const token = localStorage.getItem('token');
+    if (token) {
+      setUser(jwtDecode(token));
+    }
     fetchListings();
   }, []);
+
+  const fetchListings = async () => {
+    try {
+      const response = await getAllListings();
+      setListings(response.data);
+    } catch (error) {
+      console.error("Failed to fetch listings:", error);
+    }
+  };
+
+  const handleDelete = async (listingId) => {
+    if (window.confirm('Are you sure you want to delete this listing?')) {
+      try {
+        await deleteListing(listingId);
+        toast.success('Listing deleted!');
+        fetchListings(); // Refresh the list
+      } catch (error) {
+        toast.error('Could not delete listing.');
+      }
+    }
+  };
 
   return (
     // The JSX is the same, but you can remove the outer header if you want
@@ -29,13 +46,18 @@ function HomePage() {
         <h1>E-Waste Marketplace</h1>
       </header>
       <div className="listings-container">
-        {loading ? (
-          <p>Loading listings...</p>
-        ) : (
-          listings.map(listing => (
-            <ListingCard key={listing._id} listing={listing} />
-          ))
-        )}
+        {listings.map(listing => (
+          <div key={listing._id}>
+            <ListingCard listing={listing} />
+            {/* Show buttons only if the user is logged in and owns the listing */}
+            {user && user.id === listing.disposer_id && (
+              <div>
+                <button>Update</button> {/* We'll add update logic later */}
+                <button onClick={() => handleDelete(listing._id)}>Delete</button>
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );
