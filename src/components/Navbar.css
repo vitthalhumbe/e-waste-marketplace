@@ -181,3 +181,12 @@
     margin-top: 10px;
   }
 }
+
+.green-points {
+  background-color: rgba(46, 204, 113, 0.2); /* Light green background */
+  color: var(--primary-green);
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}

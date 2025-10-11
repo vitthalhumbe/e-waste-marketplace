@@ -24,19 +24,15 @@ const Navbar = () => {
     navigate('/login');
     window.location.reload(); 
   };
-
-  return (
+return (
     <nav className="navbar">
       <Link to="/" className="nav-logo">E-Waste Hub</Link>
       
       <div className="nav-links">
         <Link to="/">Home</Link>
-        
-        {/* --- ADDED STATIC PAGE LINKS --- */}
         <Link to="/about">About Us</Link>
         <Link to="/team">Our Team</Link>
         <Link to="/sdgs">SDGs</Link>
-        {/* ------------------------------- */}
 
         {user ? (
           // --- Logged-in User View ---
@@ -49,6 +45,8 @@ const Navbar = () => {
             )}
             
             <div className="nav-user-info">
+              {/* --- NEW POINTS DISPLAY --- */}
+              <span className="green-points">🍃 {user.green_points || 0} Points</span>
               <span>Welcome, {user.username}</span>
               <button onClick={handleLogout} className="logout-button">Logout</button>
             </div>

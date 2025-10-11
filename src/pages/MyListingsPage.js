@@ -36,11 +36,18 @@ const MyListingsPage = () => {
     }
   };
 
+ // src/pages/MyListingsPage.js
+
   const handleMarkAsCollected = async (listingId) => {
     try {
       await updateListingStatus(listingId);
-      toast.success('Listing marked as collected!');
-      fetchUserListings();
+      toast.success('Listing marked as collected! You earned 10 points.');
+      
+      // Reload the page to refresh the navbar and show the new point total
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500); // Wait 1.5 seconds for the user to read the toast
+
     } catch (error) {
       toast.error('Failed to update status.');
     }
