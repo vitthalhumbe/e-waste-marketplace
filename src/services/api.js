@@ -35,7 +35,7 @@ export const deleteListing = (id) => api.delete(`/listings/${id}`);
 export const getMyListings = () => api.get('/listings/my-listings');
 const createAdminHeaders = (password) => ({
   headers: { 'x-admin-password': password }
-});
+});export const updateListingStatus = (id) => api.put(`/listings/${id}/status`);
 
 export const getCollectors = (password) => api.get('/admin/collectors', createAdminHeaders(password));
 export const updateCollectorStatus = (id, status, password) => api.put(`/admin/users/${id}/status`, { status }, createAdminHeaders(password));

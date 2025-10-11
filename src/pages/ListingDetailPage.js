@@ -3,12 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getListingById } from '../services/api';
 import toast from 'react-hot-toast';
+import SingleListingMap from '../components/SingleListingMap'; // <-- Import the new map component
 import './ListingDetailPage.css';
 
 const ListingDetailPage = () => {
   const { id } = useParams();
   const [listing, setListing] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to control the modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -46,14 +47,20 @@ const ListingDetailPage = () => {
               <li><strong>Device Type:</strong> {listing.device_type}</li>
             </ul>
           </div>
-          {/* This button now opens the modal */}
+          
+          {/* --- NEW MAP SECTION --- */}
+          <div className="info-section">
+            <h3>Location</h3>
+            <SingleListingMap lat={listing.latitude} lng={listing.longitude} />
+          </div>
+
           <button className="contact-button" onClick={() => setIsModalOpen(true)}>
             Contact Disposer
           </button>
         </div>
       </div>
 
-      {/* --- The Modal Popup --- */}
+      {/* --- Modal Popup (remains the same) --- */}
       {isModalOpen && (
         <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>

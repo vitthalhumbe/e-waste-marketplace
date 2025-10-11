@@ -37,3 +37,18 @@
 .delete-btn {
   background-color: #e74c3c; /* Red */
 }
+
+/* Add to MyListingsPage.css */
+.controls .collected-btn {
+  background-color: #3498db; /* Blue */
+  flex-basis: 100%; /* Make this button span the full width */
+  margin-top: 10px;
+}
+
+.status-banner {
+  text-align: center;
+  padding: 10px;
+  background-color: var(--primary-green);
+  color: white;
+  font-weight: bold;
+}

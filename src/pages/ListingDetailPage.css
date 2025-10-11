@@ -134,3 +134,13 @@
   border-bottom: none;
   margin-bottom: 0;
 }
+
+/* Add to ListingDetailPage.css */
+
+.single-map-wrapper {
+  height: 250px;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden; /* Ensures the map corners are rounded */
+  border: 1px solid #e0e0e0;
+}

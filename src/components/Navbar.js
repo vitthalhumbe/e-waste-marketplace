@@ -22,7 +22,7 @@ const Navbar = () => {
     localStorage.removeItem('token');
     toast.success('You have been logged out.');
     navigate('/login');
-    window.location.reload(); // To ensure the navbar state updates
+    window.location.reload(); 
   };
 
   return (
@@ -30,20 +30,20 @@ const Navbar = () => {
       <Link to="/" className="nav-logo">E-Waste Hub</Link>
       
       <div className="nav-links">
-        {/* Home link is now always visible */}
         <Link to="/">Home</Link>
 
         {user ? (
           // --- Logged-in User View ---
           <>
             {user.user_type === 'Disposer' && (
-  <>
-    <Link to="/my-listings">My Listings</Link>
-    <Link to="/create">Create Listing</Link>
-  </>
-)}
-            {user.user_type === 'Collector' && <Link to="/map">View Map</Link>}
-
+              <>
+                <Link to="/my-listings">My Listings</Link>
+                <Link to="/create">Create Listing</Link>
+              </>
+            )}
+            
+            {/* The "View Map" link has been removed from the Collector's view */}
+            
             <div className="nav-user-info">
               <span>Welcome, {user.username}</span>
               <button onClick={handleLogout} className="logout-button">Logout</button>

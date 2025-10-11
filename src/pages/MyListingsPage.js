@@ -1,10 +1,11 @@
 // src/pages/MyListingsPage.js
 import React, { useState, useEffect } from 'react';
-import { getMyListings, deleteListing } from '../services/api';
+import { Link } from 'react-router-dom';
+// 1. ADD 'updateListingStatus' to the import
+import { getMyListings, deleteListing, updateListingStatus } from '../services/api';
 import ListingCard from '../components/ListingCard';
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
-import './MyListingPage.css'; // New CSS file
+import './MyListingPage.css'; // Corrected the filename typo
 
 const MyListingsPage = () => {
   const [myListings, setMyListings] = useState([]);
@@ -22,6 +23,7 @@ const MyListingsPage = () => {
     }
   };
 
+  // 2. ADD THE MISSING 'handleDelete' function here
   const handleDelete = async (listingId) => {
     if (window.confirm('Are you sure you want to delete this listing?')) {
       try {
@@ -34,6 +36,16 @@ const MyListingsPage = () => {
     }
   };
 
+  const handleMarkAsCollected = async (listingId) => {
+    try {
+      await updateListingStatus(listingId);
+      toast.success('Listing marked as collected!');
+      fetchUserListings();
+    } catch (error) {
+      toast.error('Failed to update status.');
+    }
+  };
+
   return (
     <div className="my-listings-page">
       <h1>My Listings</h1>
@@ -42,11 +54,16 @@ const MyListingsPage = () => {
           {myListings.map(listing => (
             <div key={listing._id} className="listing-with-controls">
               <ListingCard listing={listing} />
-              <div className="controls">
-                {/* Change this button to a Link */}
-                <Link to={`/edit-listing/${listing._id}`} className="update-btn">Update</Link>
-                <button className="delete-btn" onClick={() => handleDelete(listing._id)}>Delete</button>
-              </div>
+              {listing.status === 'Available' && (
+                <div className="controls">
+                  <Link to={`/edit-listing/${listing._id}`} className="update-btn">Update</Link>
+                  <button className="delete-btn" onClick={() => handleDelete(listing._id)}>Delete</button>
+                  <button className="collected-btn" onClick={() => handleMarkAsCollected(listing._id)}>Mark as Collected</button>
+                </div>
+              )}
+              {listing.status === 'Collected' && (
+                <div className="status-banner">Collected</div>
+              )}
             </div>
           ))}
         </div>
