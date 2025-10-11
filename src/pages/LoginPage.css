@@ -1,0 +1,84 @@
+/* src/pages/LoginPage.css */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 20px;
+}
+
+.login-box {
+  width: 100%;
+  max-width: 450px;
+  background-color: var(--white);
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.toggle-buttons {
+  display: flex;
+  background-color: var(--background-color);
+  border-radius: 8px;
+  padding: 5px;
+  margin-bottom: 25px;
+}
+
+.toggle-buttons button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background-color: transparent;
+  color: #7f8c8d;
+  font-size: 1rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.toggle-buttons button.active {
+  background-color: var(--white);
+  color: var(--primary-green);
+  font-weight: 700;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.login-box h2 {
+  margin-bottom: 25px;
+  color: var(--dark-text);
+}
+
+.login-box form div {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.login-box form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.login-box form input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--subtle-grey);
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.login-button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 10px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--white);
+  background-color: var(--primary-green);
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.login-button:hover {
+  background-color: #27ae60;
+}
