@@ -1,17 +1,21 @@
+// src/pages/HomePage.js
 import React, { useState, useEffect } from 'react';
 import { getAllListings } from '../services/api';
 import ListingCard from '../components/ListingCard';
-import './HomePage.css'; // New CSS file for the homepage
+import './HomePage.css';
 
 const HomePage = () => {
   const [listings, setListings] = useState([]);
-  const [filter, setFilter] = useState(''); // <-- New state for the filter
+  const [filter, setFilter] = useState('');
 
-  // This useEffect will now re-run whenever the 'filter' state changes
   useEffect(() => {
     const fetchListings = async () => {
-      const response = await getAllListings(filter);
-      setListings(response.data);
+      try {
+        const response = await getAllListings(filter);
+        setListings(response.data);
+      } catch (error) {
+        console.error("Failed to fetch listings:", error);
+      }
     };
     fetchListings();
   }, [filter]);
@@ -22,12 +26,10 @@ const HomePage = () => {
       <section className="hero-section">
         <h1>Give Your Tech a Second Life</h1>
         <p>Find parts, fuel creativity, or recycle responsibly.</p>
-        <div className="search-bar">
-          <input type="text" placeholder="Search for 'iPhone screen', 'laptop parts'..." />
-          <button>Search</button>
-        </div>
       </section>
-<section className="listings-section">
+
+      {/* Listings Section */}
+      <section className="listings-section">
         <div className="filter-container">
           <h2>Recent Listings</h2>
           <select onChange={(e) => setFilter(e.target.value)} value={filter}>
@@ -39,9 +41,13 @@ const HomePage = () => {
           </select>
         </div>
         <div className="listings-grid">
-          {listings.map(listing => (
-            <ListingCard key={listing._id} listing={listing} />
-          ))}
+          {listings.length > 0 ? (
+            listings.map(listing => (
+              <ListingCard key={listing._id} listing={listing} />
+            ))
+          ) : (
+            <p className="no-listings-message">No listings found. Try adjusting your filters.</p>
+          )}
         </div>
       </section>
     </div>

@@ -17,11 +17,18 @@ api.interceptors.request.use(config => {
 });
 
 // --- Public Routes ---
-export const getAllListings = (deviceType) => {
+// src/services/api.js
+
+export const getAllListings = (deviceType, searchTerm) => {
+  const params = new URLSearchParams();
   if (deviceType) {
-    return api.get(`/listings?device_type=${deviceType}`);
+    params.append('device_type', deviceType);
   }
-  return api.get('/listings');
+  if (searchTerm) {
+    params.append('search', searchTerm);
+  }
+  // This constructs the URL, e.g., /listings?search=iphone&device_type=Phone
+  return api.get(`/listings?${params.toString()}`);
 };
 export const getListingById = (id) => api.get(`/listings/${id}`);
 export const registerUser = (userData) => api.post('/users/register', userData);
@@ -36,6 +43,7 @@ export const getMyListings = () => api.get('/listings/my-listings');
 const createAdminHeaders = (password) => ({
   headers: { 'x-admin-password': password }
 });export const updateListingStatus = (id) => api.put(`/listings/${id}/status`);
+
 
 export const getCollectors = (password) => api.get('/admin/collectors', createAdminHeaders(password));
 export const updateCollectorStatus = (id, status, password) => api.put(`/admin/users/${id}/status`, { status }, createAdminHeaders(password));
