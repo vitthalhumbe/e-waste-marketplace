@@ -26,13 +26,80 @@
 .section p { line-height: 1.6; }
 
 /* Team Page Styles */
-.team-grid { text-align: center; }
-.team-member-card { margin-top: 20px; }
-.team-member-card img { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; }
-.team-member-card h4 { color: #7f8c8d; font-weight: normal; }
-.team-member-card .social-link { display: inline-block; margin-top: 10px; background-color: var(--primary-green); color: var(--white); padding: 10px 20px; border-radius: 5px; }
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Creates a 2x2 grid */
+  gap: 30px; /* Space between cards */
+  text-align: center;
+}
+
+.team-member-card {
+  background-color: var(--background-color); /* Light background for the card */
+  border-radius: 8px;
+  padding: 5px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: flex; /* Use flexbox for internal alignment */
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between; /* Pushes content and link to ends */
+  height: 100%; /* Ensures cards in a row have same height */
+}
+
+.team-member-image {
+  width: 100%; /* Image takes full width of the card */
+  max-width: 200px; /* Limit max width for consistency */
+  height: 250px; /* Fixed height for rectangular images */
+  object-fit: cover; /* Ensures image covers the area without distortion */
+  border-radius: 4px; /* Slightly rounded corners for the rectangle */
+  margin-bottom: 15px;
+  border: 1px solid var(--subtle-grey); /* Subtle border for images */
+}
+
+.team-member-card h3 {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-size: 1.4rem;
+  color: var(--dark-text);
+}
+
+.team-member-card h4 {
+  color: var(--primary-green); /* Highlight role with green */
+  font-weight: bold; /* Make it bold */
+  font-size: 1.1rem; /* Slightly larger font size */
+  margin-bottom: 15px;
+}
+
+.team-member-card p {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.5;
+  flex-grow: 1; /* Allows bio to take up available space */
+  margin-bottom: 20px;
+}
+
+.team-member-card .social-link {
+  display: inline-block;
+  margin-top: auto; /* Pushes the button to the bottom if content varies */
+  background-color: var(--primary-green);
+  color: var(--white);
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.team-member-card .social-link:hover {
+  background-color: #27ae60; /* A slightly darker green on hover */
+}
 
 /* SDGs Page Styles */
 .sdg-card { display: flex; align-items: center; gap: 30px; margin-bottom: 40px; }
 .sdg-icon { font-size: 1.5rem; font-weight: bold; color: var(--white); background-color: var(--dark-text); padding: 20px; border-radius: 8px; }
 .sdg-content p { line-height: 1.6; }
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .team-grid {
+    grid-template-columns: 1fr; /* Stack cards vertically on small screens */
+  }
+}
